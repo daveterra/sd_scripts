@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo "Hello World!" | figlet -f slant | pv -qL 200 | lolcat

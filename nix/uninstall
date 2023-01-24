@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# <package> use to uninstall
+
+package=$1
+
+# shellcheck disable=SC2086
+nix-env -e "$package"
