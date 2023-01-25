@@ -30,10 +30,14 @@ check_for_date() {
     || echo " no times available")
 
   (grep -q "\"court-not-available-text\"" $out \
-    || echo "Times available")
+    || echo "Times available:")
+
+  times=$(grep -Ei '[0-9]+:[0-9]+[ap]m' $out | cut -f1 -d "m")
+  echo -n "    "
+  echo $times
 }
 
-for i in {1..14}
+for i in {1..7}
 do
   d=$(date -v +${i}d '+%m %d')
   friendly=$(date -v +${i}d '+%a %m-%d')
