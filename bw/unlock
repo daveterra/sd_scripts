@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+source $SD/env
+
+bw unlock --raw > $SESSION_FILE
