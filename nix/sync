@@ -10,4 +10,5 @@
 
 set -euo pipefail
 
-nix-env -irf ~/.local/share/chezmoi/user.nix
+source $SD/env
+nix-env -irf $USER_FILE

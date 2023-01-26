@@ -2,8 +2,9 @@
 #!nix-shell -i bash -p janet jq bash
 
 set -euo pipefail
-
 # prints what will happen if you run sync
+
+source $SD/env
 
 query() {
   nix-env -q "$@" --json | jq -r '.[] | .pname + " " + .version'
@@ -11,4 +12,4 @@ query() {
 
 janet "$(dirname "$0")/version-diff.janet" \
   <(query) \
-  <(query -af ~/.local/share/chezmoi/user.nix)
+  <(query -af $USER_FILE)
