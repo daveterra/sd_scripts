@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source $SD/env
+
+if [[ ! -f $SESSION_FILE ]]
+then
+  echo "uninitialized"
+  exit 1
+fi
+
+export BW_SESSION=$(cat $SESSION_FILE)
+status=$(bw status --quiet --response | jq -r .data.template.status)
+echo $status

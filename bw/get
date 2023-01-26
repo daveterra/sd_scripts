@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+source $SD/env
+export BW_SESSION=$(cat $SESSION_FILE)
+
+item=
+while [[ $# -gt 0 ]]; do
+  arg="$1"
+  case $arg in
+    --item) shift; item=$1;;
+  esac
+  shift
+done
+
+bw get password $item
