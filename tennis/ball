@@ -26,8 +26,20 @@ check_for_date() {
      --data-raw "reservation-list-page=1&user_id=41668&event_member_token_reserve_court=b86895d3c0bfda3c1871146a5bd1f038&current_guest_count=0&component=2&club=-1&location=1&host=41668&ball_machine=${ball}&date=${month}%2F${day}%2F2023&interval=${time}&time-reserve=&location-reserve=&surface-reserve=&courtsnotavailable=&join-waitlist-case=0" \
      -H "Cookie: PHPSESSID=$session_key;" > $out
 
-  (grep -q "\"times-to-reserve\"" $out \
-    || echo " no times available")
+
+  if grep -q "\"times-to-reserve\"" $out
+  then
+    echo "Times available:"
+
+    times=$(grep -Ei '[0-9]+:[0-9]+[ap]m' $out | cut -f1 -d "m")
+    echo -n "    "
+    echo $times
+
+    return
+  else
+    echo " no times available"
+    return
+  fi
 
   (grep -q "\"court-not-available-text\"" $out \
     || echo "Times available:")
@@ -37,7 +49,7 @@ check_for_date() {
   echo $times
 }
 
-for i in {1..7}
+for i in {1..9}
 do
   d=$(date -v +${i}d '+%m %d')
   friendly=$(date -v +${i}d '+%a %m-%d')
